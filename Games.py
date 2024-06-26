@@ -22,27 +22,18 @@ def print_query(view_name:str):
     print(tabulate(results,headings))
     db.close()
 
-menu_choice = ''
-while menu_choice != 'Z':
-    menu_choice = input('Welcome to the Games database\n\n'
-                        'Type the letter for the information you want:\n'
-                        'A: List all games made for PC\n'
-                        'B: List all games made by Konami\n'
-                        'C: List all games released before 1999\n'
-                        'D: List all games made after 1999\n'
-                        'E: List all games that are action\n'
-                        "F: List all games that are shoot 'em up\n"
-                        'Z: Exit \n\nType option here: ')
-    menu_choice = menu_choice.upper()
-    if menu_choice == 'A':
-        print_query('All games made for PC')
-    elif menu_choice == 'B':
-        print_query('All games made by Konami')
-    elif menu_choice == 'C':
-        print_query('All games released before 1999')
-    elif menu_choice == 'D':
-        print_query('All games made after 1999')
-    elif menu_choice == 'E':
-        print_query('All games that are action')
-    elif menu_choice == 'F':
-        print_query("All games that are shoot 'em up")
+TABLES = (' Games '
+          ' LEFT JOIN Original_platforms ON Games.Platform_ID = Original_platforms.Platform_ID '
+          ' LEFT JOIN Publisher ON Games.Publisher_ID = Publisher.Publisher_ID ')
+
+def print_parameter_query(fields:str, where:str, parameter):
+    db = sqlite3.connect(DB_NAME)
+    cursor = db.cursor()
+    sql = ('SELECT ' + fields + ' FROM ' + TABLES + ' WHERE ' + where)
+    cursor.execute(sql,(parameter,))
+    results = cursor.fetchall()
+    print(tabulate(results,fields.split(',')))
+    db.close()
+
+Original_platforms = input('What platform do you want to see: ')
+print_parameter_query('Year, Game, Genre', 'Original_platforms = ? ORDER by Year DESC',Original_platforms)
