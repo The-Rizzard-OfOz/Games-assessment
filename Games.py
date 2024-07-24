@@ -23,9 +23,14 @@ def print_query(view_name:str):
     db.close()
 
 print('Type the letter for which table you would like to view')
-Thing = input(' A: What platform '
-      ' B: What Publisher '
-      ' C: End ')
+Thing = input('A: What platform\n'
+              'B: List all games made for PC\n'
+              'C: List all games made by Konami\n'
+              'D: List all games made before 1999\n'
+              'E: List all games made after 1999\n'
+              'F: List all games that are action\n'
+              "G: List all games that are shoot 'em up\n"
+              'Z: End\n')
 
 
 if Thing == 'A':
@@ -42,23 +47,34 @@ if Thing == 'A':
         print(tabulate(results,fields.split(',')))
         db.close()
 
-    Original_platforms = input('What platform do you want to see: ')
+    Original_platforms = input('These are the platform you can choose from:\n'
+        'HP 2100\n'
+        'Arcade\n'
+        'Atari 2600\n'
+        'PDP-10\n'
+        'Apple II\n'
+        'Atari 8-bit\n'
+        'BBC Micro\n'
+        'NES\n'
+        'Electronika 60\n'
+        'Atari ST\n'
+        'Commodore 64\n')
     print_parameter_query('Year, Game, Genre', 'Original_platforms = ? ORDER by Year DESC',Original_platforms)
 
 if Thing == 'B':
-    TABLES = (' Games '
-              ' LEFT JOIN Publisher ON Games.Publisher_ID = Publisher.Publisher_ID '
-    ' LEFT JOIN Original_platforms ON Games.Platform_ID = Original_platforms.Platform_ID ')
-                
+    print_query('All games made for pc')
 
-    def print_parameter_query(fields:str, where:str, parameter):
-        db = sqlite3.connect(DB_NAME)
-        cursor = db.cursor()
-        sql = ('SELECT ' + fields + ' FROM ' + TABLES + ' WHERE ' + where)
-        cursor.execute(sql,(parameter,))
-        results = cursor.fetchall()
-        print(tabulate(results,fields.split(',')))
-        db.close()
+if Thing == 'C':
+    print_query('All games made by Konami')
 
-    Original_platforms = input('What publisher do you want to see: ')
-    print_parameter_query('Year, Game, Genre', 'Publisher = ? ORDER by Year DESC',Publisher)
+if Thing == 'D':
+    print_query('All games made before 1999')
+
+if Thing == 'E':
+    print_query('All games made after 1999')
+
+if Thing == 'F':
+    print_query('All games that are action')
+
+if Thing == 'G':
+    print_query("All games that are Shoot 'em up")
