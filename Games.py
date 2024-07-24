@@ -62,19 +62,19 @@ if Thing == 'A':
     print_parameter_query('Year, Game, Genre', 'Original_platforms = ? ORDER by Year DESC',Original_platforms)
 
 if Thing == 'B':
-    print_query('All games made for pc')
+    print_query("All games made for pc")
 
 if Thing == 'C':
-    print_query('All games made by Konami')
+    print_query("All games made by Konami")
 
 if Thing == 'D':
-    print_query('All games made before 1999')
+    print_query("All games made before 1999")
 
 if Thing == 'E':
-    print_query('All games made after 1999')
+    print_query("All games made after 1999")
 
 if Thing == 'F':
-    print_query('All games that are action')
+    print_query("All games that are action")
 
 if Thing == 'G':
     print_query("All games that are Shoot 'em up")
