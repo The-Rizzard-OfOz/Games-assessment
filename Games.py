@@ -22,18 +22,43 @@ def print_query(view_name:str):
     print(tabulate(results,headings))
     db.close()
 
-TABLES = (' Games '
-          ' LEFT JOIN Original_platforms ON Games.Platform_ID = Original_platforms.Platform_ID '
-          ' LEFT JOIN Publisher ON Games.Publisher_ID = Publisher.Publisher_ID ')
+print('Type the letter for which table you would like to view')
+Thing = input(' A: What platform '
+      ' B: What Publisher '
+      ' C: End ')
 
-def print_parameter_query(fields:str, where:str, parameter):
-    db = sqlite3.connect(DB_NAME)
-    cursor = db.cursor()
-    sql = ('SELECT ' + fields + ' FROM ' + TABLES + ' WHERE ' + where)
-    cursor.execute(sql,(parameter,))
-    results = cursor.fetchall()
-    print(tabulate(results,fields.split(',')))
-    db.close()
 
-Original_platforms = input('What platform do you want to see: ')
-print_parameter_query('Year, Game, Genre', 'Original_platforms = ? ORDER by Year DESC',Original_platforms)
+if Thing == 'A':
+    TABLES = (' Games '
+                ' LEFT JOIN Original_platforms ON Games.Platform_ID = Original_platforms.Platform_ID '
+                ' LEFT JOIN Publisher ON Games.Publisher_ID = Publisher.Publisher_ID ')
+
+    def print_parameter_query(fields:str, where:str, parameter):
+        db = sqlite3.connect(DB_NAME)
+        cursor = db.cursor()
+        sql = ('SELECT ' + fields + ' FROM ' + TABLES + ' WHERE ' + where)
+        cursor.execute(sql,(parameter,))
+        results = cursor.fetchall()
+        print(tabulate(results,fields.split(',')))
+        db.close()
+
+    Original_platforms = input('What platform do you want to see: ')
+    print_parameter_query('Year, Game, Genre', 'Original_platforms = ? ORDER by Year DESC',Original_platforms)
+
+if Thing == 'B':
+    TABLES = (' Games '
+              ' LEFT JOIN Publisher ON Games.Publisher_ID = Publisher.Publisher_ID '
+    ' LEFT JOIN Original_platforms ON Games.Platform_ID = Original_platforms.Platform_ID ')
+                
+
+    def print_parameter_query(fields:str, where:str, parameter):
+        db = sqlite3.connect(DB_NAME)
+        cursor = db.cursor()
+        sql = ('SELECT ' + fields + ' FROM ' + TABLES + ' WHERE ' + where)
+        cursor.execute(sql,(parameter,))
+        results = cursor.fetchall()
+        print(tabulate(results,fields.split(',')))
+        db.close()
+
+    Original_platforms = input('What publisher do you want to see: ')
+    print_parameter_query('Year, Game, Genre', 'Publisher = ? ORDER by Year DESC',Publisher)
