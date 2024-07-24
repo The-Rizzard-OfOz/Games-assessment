@@ -77,4 +77,4 @@ if Thing == 'F':
     print_query("All games that are action")
 
 if Thing == 'G':
-    print_query("All games that are Shoot 'em up")
+    print_query("All games that are Shoot em up")
